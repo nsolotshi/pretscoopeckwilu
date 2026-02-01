@@ -134,17 +134,36 @@
             position: relative;
         }
 
+        /* Gardez votre style actuel et ajoutez/modifiez ceci : */
+
         .dropdown-content {
-            display: none;
+            display: none; /* Caché par défaut */
             position: absolute;
-            top: 100%;
-            left: 0;
-            background: white;
-            min-width: 280px;
-            box-shadow: var(--box-shadow);
+            background-color: white;
+            min-width: 250px;
+            box-shadow: 0px 8px 16px 0px rgba(0,0,0,0.2);
+            z-index: 1000;
             border-radius: var(--border-radius);
-            z-index: 100;
-            overflow: hidden;
+        }
+
+        /* Cette classe sera ajoutée via JS au clic */
+        .dropdown-content.show {
+            display: block !important;
+        }
+
+        /* Sur PC, on peut garder le survol, mais c'est mieux de tout gérer au clic pour la cohérence */
+        @media (min-width: 993px) {
+            .dropdown:hover .dropdown-content {
+                display: block;
+            }
+        }
+
+        /* Sur Mobile, on s'assure que le menu s'affiche bien sous le bouton */
+        @media (max-width: 992px) {
+            .dropdown-content {
+                position: static; /* Le menu pousse le contenu au lieu de flotter */
+                width: 100%;
+            }
         }
 
         .dropdown:hover .dropdown-content {
@@ -715,56 +734,53 @@
     </div>
     <!-- En-tête avec navigation -->
     <header>
-        <div class="header-container">
-            <div class="logo" style="display: flex; align-items: center; gap: 10px;">
-               <img src="https://i.postimg.cc/RNH2v9sC/logo-coopec-Kwilu.jpg" alt="Logo" class="logo-img">
-               <h1>COOPEC <span>KWILU</span></h1>
+    <div class="header-container">
+        <div class="logo" style="display: flex; align-items: center; gap: 10px;">
+            <img src="https://i.postimg.cc/RNH2v9sC/logo-coopec-Kwilu.jpg" alt="Logo" class="logo-img" 
+                 style="width: 45px; height: 45px; border-radius: 50%; object-fit: cover; border: 2px solid var(--secondary-color); box-shadow: var(--box-shadow);">
+            <h1 style="font-size: 1.8rem; font-weight: 600;">COOPEC <span style="color: var(--secondary-color);">KWILU</span></h1>
+        </div>
+
+        <div class="nav-buttons">
+            <button class="nav-btn" onclick="showPage('home')">
+                <i class="fas fa-home"></i> Accueil
+            </button>
+
+            <div class="dropdown">
+                <button class="nav-btn dropdown-btn" id="btn-commandes" onclick="toggleDropdown(event)">
+                    <i class="fas fa-tasks"></i> Commandes <i class="fas fa-chevron-down" style="font-size: 0.8rem; margin-left: 5px;"></i>
+                </button>
+                <div class="dropdown-content" id="dropdown-commandes">
+                    <a href="#" class="dropdown-item" onclick="handleMenuClick('journal')">
+                        <i class="fas fa-book"></i> Journal crédits
+                    </a>
+                    <a href="#" class="dropdown-item" onclick="handleMenuClick('details-comptables')">
+                        <i class="fas fa-file-invoice-dollar"></i> Détails d'un prêt
+                    </a>
+                    <a href="#" class="dropdown-item" onclick="handleMenuClick('situation-generale')">
+                        <i class="fas fa-chart-line"></i> Situation des prêts
+                    </a>
+                    <a href="#" class="dropdown-item" onclick="handleMenuClick('rapport-periodique')">
+                        <i class="fas fa-calendar-alt"></i> Rapport périodique
+                    </a>
+                    <a href="#" class="dropdown-item" onclick="handleMenuClick('historique-membre')">
+                        <i class="fas fa-history"></i> Historique des prêts
+                    </a>
+                    <a href="#" class="dropdown-item" onclick="handleMenuClick('actualiser-penalites')">
+                        <i class="fas fa-exclamation-triangle"></i> Actualiser pénalités
+                    </a>
+                </div>
             </div>
 
-            <div class="nav-buttons">
-                <button class="nav-btn" onclick="showPage('home')">
-                    <i class="fas fa-home"></i> Accueil
-                </button>
-                <div class="dropdown">
-                    <button class="nav-btn dropdown-btn">
-                        <i class="fas fa-tasks"></i> Commandes <i class="fas fa-chevron-down"></i>
-                    </button>
-                    <div class="dropdown-content">
-                        <a href="#" class="dropdown-item" onclick="showCommand('journal')">
-                            <i class="fas fa-book"></i> Journal crédits
-                        </a>
-                        <a href="#" class="dropdown-item" onclick="showCommand('details-comptables')">
-                            <i class="fas fa-file-invoice-dollar"></i> Détails d'un prêt
-                        </a>
-                        <a href="#" class="dropdown-item" onclick="showCommand('situation-generale')">
-                            <i class="fas fa-chart-line"></i> Situation des prêts
-                        </a>
-                        <a href="#" class="dropdown-item" onclick="showCommand('rapport-periodique')">
-                            <i class="fas fa-calendar-alt"></i> Rapport périodique
-                        </a>
-                        <!-- <a href="#" class="dropdown-item" onclick="showCommand('modifier-pret')">
-                            <i class="fas fa-edit"></i> Modifier un prêt
-                        </a>
-                        <a href="#" class="dropdown-item" onclick="showCommand('modifier-remboursement')">
-                            <i class="fas fa-exchange-alt"></i> Modifier remboursement
-                        </a> -->
-                        <a href="#" class="dropdown-item" onclick="showCommand('historique-membre')">
-                            <i class="fas fa-history"></i> Historique des prêts
-                        </a>
-                        <a href="#" class="dropdown-item" onclick="showCommand('actualiser-penalites')">
-                            <i class="fas fa-exclamation-triangle"></i> Actualiser pénalités
-                        </a>
-                    </div>
-                </div>
-                <button class="nav-btn" onclick="showPage('enregistrer-pret')">
-                    <i class="fas fa-file-signature"></i> Enregistrer Prêt
-                </button>
-                <button class="nav-btn" onclick="showPage('enregistrer-remboursement')">
-                    <i class="fas fa-money-check-alt"></i> Remboursement
-                </button>
-            </div>
+            <button class="nav-btn" onclick="showPage('enregistrer-pret')">
+                <i class="fas fa-file-signature"></i> Enregistrer Prêt
+            </button>
+            <button class="nav-btn" onclick="showPage('enregistrer-remboursement')">
+                <i class="fas fa-money-check-alt"></i> Remboursement
+            </button>
         </div>
-    </header>
+    </div>
+</header>
 
     <div id="install-banner" style="display:none; background: #3498db; color: white; padding: 15px; text-align: center; position: fixed; bottom: 0; width: 100%; z-index: 9999;">
         <span>Voulez-vous installer l'application sur votre appareil ?</span>
@@ -2411,6 +2427,41 @@
         document.getElementById('historique-resultats').innerHTML = html;
         }
 
+        // ==============================================
+        // FONCTIONS POUR LE MENU DES COMMANDES
+        // ==============================================
+        function toggleDropdown(event) {
+            // Empêche la fermeture immédiate
+            event.stopPropagation();
+            const dropdown = document.getElementById('dropdown-commandes');
+            dropdown.classList.toggle('show');
+        }
+
+        // Fonction pour gérer le clic sur un sous-menu
+        function handleMenuClick(command) {
+            // 1. Exécuter la commande demandée
+            showCommand(command);
+            
+            // 2. Fermer le menu après la sélection (optionnel sur mobile, 
+            // enlevez la ligne ci-dessous si vous voulez qu'il reste ouvert)
+            document.getElementById('dropdown-commandes').classList.remove('show');
+        }
+
+        // Fermer le menu si l'utilisateur clique n'importe où ailleurs sur l'écran
+        window.onclick = function(event) {
+            if (!event.target.matches('.dropdown-btn') && !event.target.closest('.dropdown-btn')) {
+                const dropdowns = document.getElementsByClassName("dropdown-content");
+                for (let i = 0; i < dropdowns.length; i++) {
+                    const openDropdown = dropdowns[i];
+                    if (openDropdown.classList.contains('show')) {
+                        openDropdown.classList.remove('show');
+                    }
+                }
+            }
+        }
+        // ==============================================
+        // FONCTIONS POUR L'AUTHENTIFICATION
+
         async function tenterConnexion() {
             const pwd = document.getElementById('access-password').value;
             const errorDiv = document.getElementById('auth-error');
@@ -2480,5 +2531,4 @@
 
     </script>
 </body>
-
 </html>
