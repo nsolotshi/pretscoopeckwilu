@@ -1,20 +1,17 @@
 const CACHE_NAME = 'coopec-v1';
-const ASSETS = [
-  './indexdeep.html',
-  './manifest.json',
-  'https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css'
-];
 
-// Installation du Service Worker
-self.addEventListener('install', (e) => {
-  e.waitUntil(
-    caches.open(CACHE_NAME).then((cache) => cache.addAll(ASSETS))
-  );
+// On n'installe rien de spécifique au début pour éviter les erreurs de cache
+self.addEventListener('install', (event) => {
+    self.skipWaiting();
 });
 
-// Intercepter les requêtes pour le mode hors-ligne
-self.addEventListener('fetch', (e) => {
-  e.respondWith(
-    caches.match(e.request).then((res) => res || fetch(e.request))
-  );
+self.addEventListener('activate', (event) => {
+    event.waitUntil(clients.claim());
+});
+
+// CETTE PARTIE EST OBLIGATOIRE POUR LE BOUTON D'INSTALLATION
+self.addEventListener('fetch', (event) => {
+    event.respondWith(
+        fetch(event.request).catch(() => caches.match(event.request))
+    );
 });
