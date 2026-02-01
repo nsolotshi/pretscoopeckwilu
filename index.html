@@ -159,10 +159,6 @@
             }
         }
 
-        .dropdown:hover .dropdown-content {
-            display: block;
-        }
-
         .dropdown-btn {
             width: 100%;
             text-align: left;
@@ -2423,35 +2419,29 @@
         // ==============================================
         // FONCTIONS POUR LE MENU DES COMMANDES
         // ==============================================
+     
         function toggleDropdown(event) {
-            // Empêche la fermeture immédiate
-            event.stopPropagation();
+            event.stopPropagation(); // empêche la fermeture immédiate
             const dropdown = document.getElementById('dropdown-commandes');
             dropdown.classList.toggle('show');
         }
 
-        // Fonction pour gérer le clic sur un sous-menu
+        // Fermer le menu seulement si on clique ailleurs
+        document.addEventListener('click', function () {
+            const dropdown = document.getElementById('dropdown-commandes');
+            dropdown.classList.remove('show');
+        });
+
+        // Empêcher le clic dans le menu de le fermer
+        document.getElementById('dropdown-commandes').addEventListener('click', function (event) {
+            event.stopPropagation();
+        });
+
         function handleMenuClick(command) {
-            // 1. Exécuter la commande demandée
+            document.getElementById('dropdown-commandes').classList.remove('show');
             showCommand(command);
-            
-            // 2. Fermer le menu après la sélection (optionnel sur mobile, 
-            // enlevez la ligne ci-dessous si vous voulez qu'il reste ouvert)
-            //document.getElementById('dropdown-commandes').classList.remove('show');
         }
 
-        // Fermer le menu si l'utilisateur clique n'importe où ailleurs sur l'écran
-        window.onclick = function(event) {
-            if (!event.target.matches('.dropdown-btn') && !event.target.closest('.dropdown-btn')) {
-                const dropdowns = document.getElementsByClassName("dropdown-content");
-                for (let i = 0; i < dropdowns.length; i++) {
-                    const openDropdown = dropdowns[i];
-                    if (openDropdown.classList.contains('show')) {
-                        openDropdown.classList.remove('show');
-                    }
-                }
-            }
-        }
         // ==============================================
         // FONCTIONS POUR L'AUTHENTIFICATION
 
@@ -2525,5 +2515,3 @@
     </script>
 </body>
 </html>
-
-
