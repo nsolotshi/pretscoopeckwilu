@@ -1,0 +1,2483 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Système de Crédit - Coopec Kwilu</title>
+    <link rel="manifest" href="manifest.json">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black">
+    <meta name="apple-mobile-web-app-title" content="CoopecKwilu">
+    <link rel="icon" href="https://i.postimg.cc/RNH2v9sC/logo-coopec-Kwilu.jpg" type="image/jpeg">
+    <link rel="apple-touch-icon" href="https://i.postimg.cc/RNH2v9sC/logo-coopec-Kwilu.jpg">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        /* Variables et styles globaux */
+        :root {
+            --primary-color: #2c3e50;
+            --secondary-color: #3498db;
+            --success-color: #27ae60;
+            --warning-color: #f39c12;
+            --danger-color: #e74c3c;
+            --light-color: #ecf0f1;
+            --dark-color: #2c3e50;
+            --border-radius: 8px;
+            --box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+            --transition: all 0.3s ease;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: linear-gradient(135deg, #f5f7fa 0%, #c3cfe2 100%);
+            color: var(--dark-color);
+            line-height: 1.6;
+            min-height: 100vh;
+        }
+
+        /* En-tête et navigation */
+        header {
+            background: var(--primary-color);
+            color: white;
+            padding: 1.2rem 2rem;
+            box-shadow: var(--box-shadow);
+            position: sticky;
+            top: 0;
+            z-index: 100;
+        }
+
+        .header-container {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            max-width: 1400px;
+            margin: 0 auto;
+        }
+        /* Style du Logo pour qu'il soit propre et circulaire */
+        .logo-img {
+            width: 45px;
+            height: 45px;
+            border-radius: 50%;
+            object-fit: cover;
+            border: 2px solid var(--secondary-color);
+            box-shadow: var(--box-shadow);
+        }
+
+        /* Forcer l'animation même si le navigateur est lent */
+        #global-loader i.fa-spinner {
+            display: block !important;
+            animation: spin 1s linear infinite !important;
+        }
+
+        @keyframes spin {
+            0% { transform: rotate(0deg); }
+            100% { transform: rotate(360deg); }
+        }
+        .logo img {
+            box-shadow: 0 2px 4px rgba(0,0,0,0.2);
+            transition: transform 0.3s ease;
+        }
+        .logo img:hover {
+            transform: scale(1.1);
+        }
+
+        .logo {
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+        }
+
+        .logo i {
+            font-size: 2.2rem;
+            color: var(--secondary-color);
+        }
+
+        .logo h1 {
+            font-size: 1.8rem;
+            font-weight: 600;
+        }
+
+        .logo span {
+            color: var(--secondary-color);
+        }
+
+        .nav-buttons {
+            display: flex;
+            gap: 1rem;
+        }
+
+        .nav-btn {
+            background: var(--secondary-color);
+            color: white;
+            border: none;
+            padding: 0.8rem 1.5rem;
+            border-radius: var(--border-radius);
+            cursor: pointer;
+            font-weight: 600;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+            transition: var(--transition);
+        }
+
+        .nav-btn:hover {
+            background: #2980b9;
+            transform: translateY(-2px);
+        }
+
+        .dropdown {
+            position: relative;
+        }
+
+        .dropdown-content {
+            display: none;
+            position: absolute;
+            top: 100%;
+            left: 0;
+            background: white;
+            min-width: 280px;
+            box-shadow: var(--box-shadow);
+            border-radius: var(--border-radius);
+            z-index: 100;
+            overflow: hidden;
+        }
+
+        .dropdown:hover .dropdown-content {
+            display: block;
+        }
+
+        .dropdown-btn {
+            width: 100%;
+            text-align: left;
+            justify-content: space-between;
+        }
+
+        .dropdown-item {
+            display: block;
+            padding: 1rem 1.5rem;
+            color: var(--dark-color);
+            text-decoration: none;
+            border-bottom: 1px solid #eee;
+            transition: var(--transition);
+        }
+
+        .dropdown-item:hover {
+            background: #f8f9fa;
+            color: var(--secondary-color);
+            padding-left: 2rem;
+        }
+
+        .dropdown-item i {
+            width: 20px;
+            margin-right: 0.8rem;
+        }
+
+        /* Contenu principal */
+        .main-container {
+            max-width: 1400px;
+            margin: 2rem auto;
+            padding: 0 2rem;
+        }
+
+        .page-title {
+            font-size: 2rem;
+            color: var(--primary-color);
+            margin-bottom: 2rem;
+            padding-bottom: 0.5rem;
+            border-bottom: 3px solid var(--secondary-color);
+            display: inline-block;
+        }
+
+        /* Section d'accueil */
+        .welcome-section {
+            background: white;
+            border-radius: var(--border-radius);
+            padding: 3rem;
+            box-shadow: var(--box-shadow);
+            text-align: center;
+            margin-top: 2rem;
+        }
+
+        .welcome-section i {
+            font-size: 4rem;
+            color: var(--secondary-color);
+            margin-bottom: 1.5rem;
+        }
+
+        .welcome-section h2 {
+            font-size: 2.2rem;
+            margin-bottom: 1rem;
+            color: var(--primary-color);
+        }
+
+        .welcome-section p {
+            font-size: 1.1rem;
+            color: #666;
+            max-width: 800px;
+            margin: 0 auto 2rem;
+        }
+
+        .stats-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 1.5rem;
+            margin-top: 2rem;
+        }
+
+        .stat-card {
+            background: #f8f9fa;
+            padding: 1.5rem;
+            border-radius: var(--border-radius);
+            border-left: 4px solid var(--secondary-color);
+        }
+
+        .stat-card i {
+            font-size: 2rem;
+            margin-bottom: 1rem;
+        }
+
+        .stat-card h3 {
+            font-size: 2rem;
+            color: var(--primary-color);
+        }
+
+        .stat-card p {
+            font-size: 0.9rem;
+            color: #666;
+            margin: 0;
+        }
+
+        /* Formulaires */
+        .form-container {
+            background: white;
+            border-radius: var(--border-radius);
+            padding: 2.5rem;
+            box-shadow: var(--box-shadow);
+            margin-bottom: 2rem;
+        }
+
+        .form-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 2rem;
+            padding-bottom: 1rem;
+            border-bottom: 2px solid #eee;
+        }
+
+        .form-header h2 {
+            color: var(--primary-color);
+            display: flex;
+            align-items: center;
+            gap: 0.8rem;
+        }
+
+        .form-row {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 1.5rem;
+            margin-bottom: 1.5rem;
+        }
+
+        .form-group {
+            margin-bottom: 1.5rem;
+        }
+
+        .form-group label {
+            display: block;
+            margin-bottom: 0.5rem;
+            font-weight: 600;
+            color: var(--primary-color);
+        }
+
+        .form-group label .required {
+            color: var(--danger-color);
+        }
+
+        .form-control {
+            width: 100%;
+            padding: 0.8rem 1rem;
+            border: 2px solid #ddd;
+            border-radius: var(--border-radius);
+            font-size: 1rem;
+            transition: var(--transition);
+        }
+
+        .form-control:focus {
+            border-color: var(--secondary-color);
+            outline: none;
+            box-shadow: 0 0 0 3px rgba(52, 152, 219, 0.2);
+        }
+
+        .form-control.readonly {
+            background-color: #f8f9fa;
+            color: #666;
+            cursor: not-allowed;
+        }
+
+        select.form-control {
+            appearance: none;
+            background-image: url("data:image/svg+xml;charset=UTF-8,%3csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='currentColor' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'%3e%3cpolyline points='6 9 12 15 18 9'%3e%3c/polyline%3e%3c/svg%3e");
+            background-repeat: no-repeat;
+            background-position: right 1rem center;
+            background-size: 1em;
+            padding-right: 2.5rem;
+        }
+
+        .installments-container {
+            margin-top: 2rem;
+            border-top: 2px solid #eee;
+            padding-top: 2rem;
+        }
+
+        .installments-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(350px, 1fr));
+            gap: 1.5rem;
+            margin-top: 1.5rem;
+        }
+
+        .installment-card {
+            background: #f8f9fa;
+            border-radius: var(--border-radius);
+            padding: 1.5rem;
+            border-left: 4px solid var(--secondary-color);
+        }
+
+        .installment-card h4 {
+            color: var(--primary-color);
+            margin-bottom: 1rem;
+            padding-bottom: 0.5rem;
+            border-bottom: 1px dashed #ddd;
+        }
+
+        .form-buttons {
+            display: flex;
+            justify-content: flex-end;
+            gap: 1rem;
+            margin-top: 2rem;
+            padding-top: 2rem;
+            border-top: 2px solid #eee;
+        }
+
+        .btn {
+            padding: 0.8rem 2rem;
+            border: none;
+            border-radius: var(--border-radius);
+            font-size: 1rem;
+            font-weight: 600;
+            cursor: pointer;
+            transition: var(--transition);
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            gap: 0.5rem;
+        }
+
+        .btn-primary {
+            background: var(--secondary-color);
+            color: white;
+        }
+
+        .btn-primary:hover {
+            background: #2980b9;
+            transform: translateY(-2px);
+        }
+
+        .btn-secondary {
+            background: #95a5a6;
+            color: white;
+        }
+
+        .btn-secondary:hover {
+            background: #7f8c8d;
+        }
+
+        .btn-success {
+            background: var(--success-color);
+            color: white;
+        }
+
+        .btn-success:hover {
+            background: #219653;
+        }
+
+        .btn-warning {
+            background: var(--warning-color);
+            color: white;
+        }
+
+        .btn-warning:hover {
+            background: #e67e22;
+        }
+
+        .btn-danger {
+            background: var(--danger-color);
+            color: white;
+        }
+
+        .btn-danger:hover {
+            background: #c0392b;
+        }
+
+        /* Modal et overlay */
+        .overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0, 0, 0, 0.5);
+            display: none;
+            justify-content: center;
+            align-items: center;
+            z-index: 1000;
+        }
+
+        .modal {
+            background: white;
+            border-radius: var(--border-radius);
+            width: 90%;
+            max-width: 800px;
+            max-height: 90vh;
+            overflow-y: auto;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.3);
+        }
+
+        .modal-header {
+            padding: 1.5rem 2rem;
+            background: var(--primary-color);
+            color: white;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            border-radius: var(--border-radius) var(--border-radius) 0 0;
+        }
+
+        .modal-header h3 {
+            font-size: 1.5rem;
+            display: flex;
+            align-items: center;
+            gap: 0.8rem;
+        }
+
+        .close-modal {
+            background: none;
+            border: none;
+            color: white;
+            font-size: 1.5rem;
+            cursor: pointer;
+            padding: 0.2rem;
+            border-radius: 50%;
+            width: 32px;
+            height: 32px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            transition: var(--transition);
+        }
+
+        .close-modal:hover {
+            background: rgba(255, 255, 255, 0.2);
+        }
+
+        .modal-body {
+            padding: 2rem;
+        }
+
+        .modal-footer {
+            padding: 1.5rem 2rem;
+            background: #f8f9fa;
+            border-top: 1px solid #eee;
+            display: flex;
+            justify-content: flex-end;
+            gap: 1rem;
+            border-radius: 0 0 var(--border-radius) var(--border-radius);
+        }
+
+        /* Tableaux */
+        .data-table {
+            width: 100%;
+            border-collapse: collapse;
+            margin: 1rem 0;
+        }
+
+        .data-table th {
+            background: var(--primary-color);
+            color: white;
+            padding: 1rem;
+            text-align: left;
+            font-weight: 600;
+        }
+
+        .data-table td {
+            padding: 1rem;
+            border-bottom: 1px solid #eee;
+        }
+
+        .data-table tr:hover {
+            background: #f8f9fa;
+        }
+
+        .data-table .actions {
+            display: flex;
+            gap: 0.5rem;
+        }
+
+        /* Loader et messages */
+        .loader {
+            display: none;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            padding: 3rem;
+        }
+
+        .loader i {
+            font-size: 3rem;
+            color: var(--secondary-color);
+            margin-bottom: 1rem;
+            animation: spin 1s linear infinite;
+        }
+
+        @keyframes spin {
+            0% { transform: rotate(0deg); }
+            100% { transform: rotate(360deg); }
+        }
+
+        .message {
+            padding: 1rem 1.5rem;
+            border-radius: var(--border-radius);
+            margin: 1rem 0;
+            display: none;
+        }
+
+        .message.success {
+            background: #d4edda;
+            color: #155724;
+            border-left: 4px solid var(--success-color);
+        }
+
+        .message.error {
+            background: #f8d7da;
+            color: #721c24;
+            border-left: 4px solid var(--danger-color);
+        }
+
+        .message.warning {
+            background: #fff3cd;
+            color: #856404;
+            border-left: 4px solid var(--warning-color);
+        }
+
+        .message.info {
+            background: #d1ecf1;
+            color: #0c5460;
+            border-left: 4px solid var(--secondary-color);
+        }
+        /* Style pour le bouton OK dans les messages */
+        .btn-message-ok {
+            background: rgba(0, 0, 0, 0.1);
+            border: 1px solid rgba(0, 0, 0, 0.1);
+            color: inherit; /* Utilise la couleur du texte du message (ex: vert foncé) */
+            padding: 5px 12px;
+            border-radius: 4px;
+            cursor: pointer;
+            font-weight: bold;
+            font-size: 0.85rem;
+            transition: all 0.2s;
+        }
+
+        .btn-message-ok:hover {
+            background: rgba(0, 0, 0, 0.2);
+            transform: scale(1.05);
+        }
+
+        /* Forcer l'affichage du loader global */
+        #global-loader {
+            display: none; /* Caché par défaut */
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(255, 255, 255, 0.8);
+            z-index: 10000; /* Très élevé */
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+        }
+
+        #global-loader .loader {
+            display: flex !important; /* Toujours en flex quand le parent est visible */
+        }
+
+        /* Animation de rotation fluide */
+        .fa-spinner {
+            animation: spin 1s linear infinite !important;
+        }
+        /* Responsive */
+        @media (max-width: 992px) {
+            .form-row {
+                grid-template-columns: 1fr;
+            }
+            
+            .installments-grid {
+                grid-template-columns: 1fr;
+            }
+            
+            .header-container {
+                flex-direction: column;
+                gap: 1rem;
+            }
+            
+            .nav-buttons {
+                width: 100%;
+                justify-content: center;
+                flex-wrap: wrap;
+            }
+            
+            .dropdown-content {
+                position: static;
+                box-shadow: none;
+                display: none;
+                margin-top: 1rem;
+            }
+            
+            .dropdown:hover .dropdown-content {
+                display: block;
+            }
+        }
+
+        @media (max-width: 768px) {
+            .main-container {
+                padding: 0 1rem;
+            }
+            
+            .form-container {
+                padding: 1.5rem;
+            }
+            
+            .modal {
+                width: 95%;
+                margin: 1rem;
+            }
+            
+            .form-buttons {
+                flex-direction: column;
+            }
+            
+            .btn {
+                width: 100%;
+            }
+        }
+
+        /* Styles spécifiques pour les pages cachées */
+        .page {
+            display: none;
+        }
+
+        .page.active {
+            display: block;
+            animation: fadeIn 0.5s ease;
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(20px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+    </style>
+</head>
+<body>
+    <div id="auth-overlay" class="overlay" style="display: flex; background: var(--primary-color); z-index: 9999;">
+        <div class="modal" style="max-width: 400px;">
+            <div class="modal-header">
+                <h3><i class="fas fa-lock"></i> Accès Restreint</h3>
+            </div>
+            <div class="modal-body">
+                <div class="form-group">
+                    <label>Veuillez entrer le mot de passe d'accès :</label>
+                    <input type="password" id="access-password" class="form-control" placeholder="Mot de passe">
+                </div>
+                <div id="auth-error" class="message error" style="display:none; margin-bottom: 10px;"></div>
+            </div>
+            <div class="modal-footer">
+                <button class="btn btn-primary" onclick="tenterConnexion()" style="width: 100%;">
+                    <i class="fas fa-sign-in-alt"></i> Valider l'accès
+                </button>
+            </div>
+        </div>
+    </div>
+    <!-- En-tête avec navigation -->
+    <header>
+        <div class="header-container">
+            <div class="logo" style="display: flex; align-items: center; gap: 10px;">
+               <img src="https://i.postimg.cc/RNH2v9sC/logo-coopec-Kwilu.jpg" alt="Logo" class="logo-img">
+               <h1>COOPEC <span>KWILU</span></h1>
+            </div>
+
+            <div class="nav-buttons">
+                <button class="nav-btn" onclick="showPage('home')">
+                    <i class="fas fa-home"></i> Accueil
+                </button>
+                <div class="dropdown">
+                    <button class="nav-btn dropdown-btn">
+                        <i class="fas fa-tasks"></i> Commandes <i class="fas fa-chevron-down"></i>
+                    </button>
+                    <div class="dropdown-content">
+                        <a href="#" class="dropdown-item" onclick="showCommand('journal')">
+                            <i class="fas fa-book"></i> Journal crédits
+                        </a>
+                        <a href="#" class="dropdown-item" onclick="showCommand('details-comptables')">
+                            <i class="fas fa-file-invoice-dollar"></i> Détails d'un prêt
+                        </a>
+                        <a href="#" class="dropdown-item" onclick="showCommand('situation-generale')">
+                            <i class="fas fa-chart-line"></i> Situation des prêts
+                        </a>
+                        <a href="#" class="dropdown-item" onclick="showCommand('rapport-periodique')">
+                            <i class="fas fa-calendar-alt"></i> Rapport périodique
+                        </a>
+                        <!-- <a href="#" class="dropdown-item" onclick="showCommand('modifier-pret')">
+                            <i class="fas fa-edit"></i> Modifier un prêt
+                        </a>
+                        <a href="#" class="dropdown-item" onclick="showCommand('modifier-remboursement')">
+                            <i class="fas fa-exchange-alt"></i> Modifier remboursement
+                        </a> -->
+                        <a href="#" class="dropdown-item" onclick="showCommand('historique-membre')">
+                            <i class="fas fa-history"></i> Historique des prêts
+                        </a>
+                        <a href="#" class="dropdown-item" onclick="showCommand('actualiser-penalites')">
+                            <i class="fas fa-exclamation-triangle"></i> Actualiser pénalités
+                        </a>
+                    </div>
+                </div>
+                <button class="nav-btn" onclick="showPage('enregistrer-pret')">
+                    <i class="fas fa-file-signature"></i> Enregistrer Prêt
+                </button>
+                <button class="nav-btn" onclick="showPage('enregistrer-remboursement')">
+                    <i class="fas fa-money-check-alt"></i> Remboursement
+                </button>
+            </div>
+        </div>
+    </header>
+
+    <div id="install-banner" style="display:none; background: #3498db; color: white; padding: 15px; text-align: center; position: fixed; bottom: 0; width: 100%; z-index: 9999;">
+        <span>Voulez-vous installer l'application sur votre appareil ?</span>
+        <button id="btn-install" class="btn btn-success" style="margin-left: 10px; padding: 5px 15px;">Installer</button>
+        <button onclick="document.getElementById('install-banner').style.display='none'" style="background:none; border:none; color:white; margin-left:10px; cursor:pointer;">Plus tard</button>
+    </div>
+
+    <!-- Contenu principal -->
+    <main class="main-container">
+        <!-- Page d'accueil -->
+        <div id="home" class="page active">
+            <h1 class="page-title">Tableau de Bord</h1>
+            <div class="welcome-section">
+                <i class="fas fa-handshake"></i>
+                <h2>Bienvenue dans le Système de Gestion de Crédit</h2>
+                <p>Gérez efficacement les prêts, remboursements et générez des rapports détaillés pour la Coopec Kwilu.</p>
+                
+                <div class="stats-grid">
+                    <div class="stat-card">
+                        <i class="fas fa-file-contract"></i>
+                        <h3 id="total-prets">0</h3>
+                        <p>Prêts enregistrés</p>
+                    </div>
+                    <div class="stat-card">
+                        <i class="fas fa-money-bill-wave"></i>
+                        <h3 id="total-remboursements">0</h3>
+                        <p>Remboursements traités</p>
+                    </div>
+                    <div class="stat-card">
+                        <i class="fas fa-clock"></i>
+                        <h3 id="prets-en-retard">0</h3>
+                        <p>Prêts en retard</p>
+                    </div>
+                    <div class="stat-card">
+                        <i class="fas fa-users"></i>
+                        <h3 id="membres-actifs">0</h3>
+                        <p>Membres actifs</p>
+                    </div>
+                </div>
+                
+                <div class="form-buttons" style="margin-top: 3rem; border-top: none;">
+                    <button class="btn btn-primary" onclick="showPage('enregistrer-pret')">
+                        <i class="fas fa-plus-circle"></i> Nouveau Prêt
+                    </button>
+                    <button class="btn btn-success" onclick="showPage('enregistrer-remboursement')">
+                        <i class="fas fa-money-check"></i> Enregistrer Remboursement
+                    </button>
+                </div>
+            </div>
+        </div>
+
+        <!-- Page: Enregistrer Prêt -->
+        <div id="enregistrer-pret" class="page">
+            <h1 class="page-title">Enregistrer un Nouveau Prêt</h1>
+            <div class="form-container">
+                <div class="form-header">
+                    <h2><i class="fas fa-file-contract"></i> Formulaire d'enregistrement de prêt</h2>
+                    <button class="btn btn-warning" onclick="revisionPret()">
+                        <i class="fas fa-search"></i> Révision
+                    </button>
+                </div>
+                
+                <div class="form-row">
+                    <div class="form-group">
+                        <label>N° du Prêt <span class="required">*</span></label>
+                        <input type="text" id="numero-pret" class="form-control" 
+                               pattern="^\d{3}[A-Z]\d{6}$" 
+                               title="Format: 3 chiffres + 1 lettre majuscule + 6 chiffres (ex: 123W000001)"
+                               required>
+                        <small class="form-text">Format: 3 chiffres + 1 lettre majuscule + 6 chiffres</small>
+                    </div>
+                    
+                    <div class="form-group">
+                        <label>Date du Prêt <span class="required">*</span></label>
+                        <input type="date" id="date-pret" class="form-control" required>
+                    </div>
+                </div>
+                
+                <div class="form-row">
+                    <div class="form-group">
+                        <label>Nom de l'Emprunteur <span class="required">*</span></label>
+                        <input type="text" id="nom-emprunteur" class="form-control readonly" readonly>
+                    </div>
+                    
+                    <div class="form-group">
+                        <label>Monnaie du Prêt <span class="required">*</span></label>
+                        <select id="monnaie-pret" class="form-control" required>
+                            <option value="">Sélectionner</option>
+                            <option value="CDF">CDF</option>
+                            <option value="USD">USD</option>
+                        </select>
+                    </div>
+                </div>
+                
+                <div class="form-row">
+                    <div class="form-group">
+                        <label>Capital Prêté <span class="required">*</span></label>
+                        <input type="number" id="capital-prete" class="form-control" min="0" step="0.01" required>
+                    </div>
+                    
+                    <div class="form-group">
+                        <label>Total Capital + Intérêt <span class="required">*</span></label>
+                        <input type="number" id="total-rembourser" class="form-control" min="0" step="0.01" required>
+                    </div>
+                    
+                    <div class="form-group">
+                        <label>Intérêt du Prêt</label>
+                        <input type="number" id="interet-pret" class="form-control readonly" readonly>
+                    </div>
+                </div>
+                
+                <div class="form-row">
+                    <div class="form-group">
+                        <label>Unité de Temps (UTER) <span class="required">*</span></label>
+                        <select id="uter" class="form-control" required>
+                            <option value="">Sélectionner</option>
+                            <option value="JOUR">JOUR</option>
+                            <option value="SEMAINE">SEMAINE</option>
+                            <option value="MOIS">MOIS</option>
+                            <option value="ANNEE">ANNÉE</option>
+                        </select>
+                    </div>
+                    
+                    <div class="form-group">
+                        <label>Nombre d'UTER <span class="required">*</span></label>
+                        <input type="number" id="nombre-uter" class="form-control" min="1" max="30" required>
+                    </div>
+                    
+                    <div class="form-group">
+                        <label>Date de dernière échéance <span class="required">*</span></label>
+                        <input type="date" id="date-derniere-echeance" class="form-control" required>
+                    </div>
+                </div>
+                
+                <div class="form-row">
+                    <div class="form-group">
+                        <label>Taux de pénalité <span class="required">*</span></label>
+                        <div style="display: flex; align-items: center; gap: 0.5rem;">
+                            <input type="number" id="taux-penalite" class="form-control" value="1" min="0" max="100" step="0.1" style="width: 100px;">
+                            <span style="font-size: 1.2rem;">%</span>
+                        </div>
+                        <small class="form-text">Taux appliqué en cas de retard de paiement</small>
+                    </div>
+                    
+                    <div class="form-group">
+                        <label>Zone du Prêt <span class="required">*</span></label>
+                        <select id="zone-pret" class="form-control" required>
+                            <option value="">Sélectionner</option>
+                            <option value="KIK1">KIK1</option>
+                            <option value="KIK2">KIK2</option>
+                            <option value="KIK3">KIK3</option>
+                            <option value="KIK4">KIK4</option>
+                            <option value="KIK5">KIK5</option>
+                            <option value="KIK6">KIK6</option>
+                            <option value="KIK7">KIK7</option>
+                            <option value="KIK8">KIK8</option>
+                        </select>
+                    </div>
+                </div>
+                
+                <!-- Section des échéances dynamiques -->
+                <div class="installments-container">
+                    <h3><i class="fas fa-calendar-check"></i> Plan de Remboursement</h3>
+                    <p id="installments-info">Veuillez d'abord spécifier le nombre d'UTER pour afficher les échéances.</p>
+                    <div id="installments-grid" class="installments-grid">
+                        <!-- Les échéances seront générées dynamiquement ici -->
+                    </div>
+                </div>
+                
+                <div class="form-buttons">
+                    <button class="btn btn-secondary" onclick="showPage('home')">
+                        <i class="fas fa-arrow-left"></i> Retour
+                    </button>
+                    <button class="btn btn-warning" onclick="revisionPret()">
+                        <i class="fas fa-search"></i> Révision
+                    </button>
+                </div>
+            </div>
+        </div>
+
+        <!-- Page: Enregistrer Remboursement -->
+        <div id="enregistrer-remboursement" class="page">
+            <h1 class="page-title">Enregistrer un Remboursement</h1>
+            <div class="form-container">
+                <div class="form-header">
+                    <h2><i class="fas fa-money-check-alt"></i> Formulaire de remboursement</h2>
+                    <button class="btn btn-warning" onclick="revisionRemboursement()">
+                        <i class="fas fa-search"></i> Révision
+                    </button>
+                </div>
+                
+                <div class="form-row">
+                    <div class="form-group">
+                        <label>Date de Remboursement <span class="required">*</span></label>
+                        <input type="date" id="date-remboursement" class="form-control" required>
+                    </div>
+                    
+                    <div class="form-group">
+                        <label>N° du Prêt <span class="required">*</span></label>
+                        <input type="text" id="numero-pret-remb" class="form-control" 
+                               pattern="^\d{3}[A-Z]\d{6}$" 
+                               title="Format: 3 chiffres + 1 lettre majuscule + 6 chiffres"
+                               required>
+                    </div>
+                </div>
+                
+                <div class="form-row">
+                    <div class="form-group">
+                        <label>Monnaie du Prêt</label>
+                        <input type="text" id="monnaie-pret-remb" class="form-control readonly" readonly>
+                    </div>
+                    
+                    <div class="form-group">
+                        <label>Montant Payé <span class="required">*</span></label>
+                        <input type="number" id="montant-paye" class="form-control" min="0" step="0.01" required>
+                    </div>
+                </div>
+                
+                <div class="form-buttons">
+                    <button class="btn btn-secondary" onclick="showPage('home')">
+                        <i class="fas fa-arrow-left"></i> Retour
+                    </button>
+                    <button class="btn btn-warning" onclick="revisionRemboursement()">
+                        <i class="fas fa-search"></i> Révision
+                    </button>
+                </div>
+            </div>
+        </div>
+
+        <!-- Messages système -->
+        <div id="message-container" style="position: fixed; top: 100px; right: 20px; z-index: 2000; max-width: 400px;"></div>
+    </main>
+
+    <!-- Modal de révision pour prêt -->
+    <div id="modal-revision-pret" class="overlay">
+        <div class="modal">
+            <div class="modal-header">
+                <h3><i class="fas fa-file-contract"></i> Révision du Prêt</h3>
+                <button class="close-modal" onclick="closeModal('modal-revision-pret')">&times;</button>
+            </div>
+            <div class="modal-body">
+                <div class="loader" id="loader-revision-pret">
+                    <i class="fas fa-spinner"></i>
+                    <p>Vérification en cours...</p>
+                </div>
+                <div id="revision-pret-content">
+                    <!-- Contenu généré dynamiquement -->
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button class="btn btn-secondary" onclick="closeModal('modal-revision-pret')">
+                    <i class="fas fa-times"></i> Annuler
+                </button>
+                <button class="btn btn-success" onclick="envoyerPret()">
+                    <i class="fas fa-paper-plane"></i> Envoyer
+                </button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Modal de révision pour remboursement -->
+    <div id="modal-revision-remboursement" class="overlay">
+        <div class="modal">
+            <div class="modal-header">
+                <h3><i class="fas fa-money-check-alt"></i> Révision du Remboursement</h3>
+                <button class="close-modal" onclick="closeModal('modal-revision-remboursement')">&times;</button>
+            </div>
+            <div class="modal-body">
+                <div class="loader" id="loader-revision-remb">
+                    <i class="fas fa-spinner"></i>
+                    <p>Vérification en cours...</p>
+                </div>
+                <div id="revision-remboursement-content">
+                    <!-- Contenu généré dynamiquement -->
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button class="btn btn-secondary" onclick="closeModal('modal-revision-remboursement')">
+                    <i class="fas fa-times"></i> Annuler
+                </button>
+                <button class="btn btn-success" onclick="envoyerRemboursement()">
+                    <i class="fas fa-paper-plane"></i> Envoyer
+                </button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Modal générique pour les commandes -->
+    <div id="modal-commande" class="overlay">
+        <div class="modal">
+            <div class="modal-header">
+                <h3 id="modal-commande-titre"></h3>
+                <button class="close-modal" onclick="closeModal('modal-commande')">&times;</button>
+            </div>
+            <div class="modal-body">
+                <div id="commande-content">
+                    <!-- Contenu généré dynamiquement -->
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button class="btn btn-secondary" onclick="closeModal('modal-commande')">
+                    <i class="fas fa-times"></i> Annuler
+                </button>
+                <button class="btn btn-success" id="btn-envoyer-commande">
+                    <i class="fas fa-paper-plane"></i> Envoyer
+                </button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Loader global -->
+    <div id="global-loader">
+        <div class="loader">
+            <i class="fas fa-spinner fa-3x"></i> <p style="margin-top: 15px; font-weight: bold; color: var(--primary-color);">Traitement en cours...</p>
+        </div>
+    </div>
+
+    <script>
+        // Configuration
+        const CONFIG = {
+            SCRIPT_URL: 'https://script.google.com/macros/s/AKfycbwRCb2xc56lyI1RvB3EvfYwUqHyQGVKnO3jkg15d186g-7bsbkSJ739crNoEfweipQ/exec',
+            MAX_ECHEANCES: 30
+        };
+
+        // Variables globales
+        let currentPage = 'home';
+        let currentCommand = '';
+        let pretData = {};
+        let remboursementData = {};
+
+        // Initialisation
+        document.addEventListener('DOMContentLoaded', function() {
+            // Configurer les écouteurs d'événements
+            setupEventListeners();
+            
+            // Configurer les dates par défaut
+            setDefaultDates();
+            
+            // Charger les statistiques
+            loadStatistics();
+        });
+
+        function setupEventListeners() {
+            // Écouteurs pour le formulaire de prêt
+            document.getElementById('numero-pret').addEventListener('blur', verifierNumeroPret);
+            document.getElementById('capital-prete').addEventListener('input', calculerInteret);
+            document.getElementById('total-rembourser').addEventListener('input', calculerInteret);
+            document.getElementById('nombre-uter').addEventListener('input', genererEcheances);
+            document.getElementById('date-pret').addEventListener('change', validerDatePret);
+            document.getElementById('date-derniere-echeance').addEventListener('change', validerDateEcheance);
+            
+            // Écouteurs pour le formulaire de remboursement
+            document.getElementById('numero-pret-remb').addEventListener('blur', verifierNumeroPretRemb);
+            document.getElementById('date-remboursement').addEventListener('change', validerDateRemboursement);
+            
+            // Écouteur pour la touche Entrée dans les formulaires
+            document.addEventListener('keypress', function(e) {
+                if (e.key === 'Enter' && e.target.tagName === 'INPUT') {
+                    if (currentPage === 'enregistrer-pret') {
+                        revisionPret();
+                    } else if (currentPage === 'enregistrer-remboursement') {
+                        revisionRemboursement();
+                    }
+                }
+            });
+        }
+
+        function setDefaultDates() {
+            const today = new Date().toISOString().split('T')[0];
+            document.getElementById('date-pret').value = today;
+            document.getElementById('date-remboursement').value = today;
+            
+            // Date d'échéance par défaut: aujourd'hui + 30 jours
+            const futureDate = new Date();
+            futureDate.setDate(futureDate.getDate() + 30);
+            document.getElementById('date-derniere-echeance').value = futureDate.toISOString().split('T')[0];
+        }
+
+        // Navigation entre pages
+        function showPage(pageId) {
+            // Cacher la page actuelle
+            document.querySelectorAll('.page').forEach(page => {
+                page.classList.remove('active');
+            });
+            
+            // Afficher la nouvelle page
+            document.getElementById(pageId).classList.add('active');
+            currentPage = pageId;
+            
+            // Réinitialiser les formulaires si nécessaire
+            if (pageId === 'enregistrer-pret') {
+                resetPretForm();
+            } else if (pageId === 'enregistrer-remboursement') {
+                resetRemboursementForm();
+            }
+        }
+
+        function showCommand(command) {
+            currentCommand = command;
+            let titre = '';
+            let contentHTML = '';
+            
+            switch(command) {
+                case 'journal':
+                    titre = '<i class="fas fa-book"></i> Journal des Prêts et Remboursements';
+                    contentHTML = `
+                        <div class="form-group">
+                            <label>Date des Opérations <span class="required">*</span></label>
+                            <input type="date" id="date-operations" class="form-control" required>
+                        </div>
+                        <div class="form-group">
+                            <label>E-mail <span class="required">*</span></label>
+                            <input type="email" id="email-journal" class="form-control" required>
+                        </div>
+                    `;
+                    break;
+                    
+                case 'details-comptables':
+                    titre = '<i class="fas fa-file-invoice-dollar"></i> Détails Comptables d\'un Prêt';
+                    contentHTML = `
+                        <div class="form-group">
+                            <label>N° du Prêt <span class="required">*</span></label>
+                            <input type="text" id="numero-pret-details" class="form-control" 
+                                   pattern="^\\d{3}[A-Z]\\d{6}$" required>
+                        </div>
+                        <div class="form-group">
+                            <label>E-mail <span class="required">*</span></label>
+                            <input type="email" id="email-details" class="form-control" required>
+                        </div>
+                    `;
+                    break;
+                    
+                case 'situation-generale':
+                    titre = '<i class="fas fa-chart-line"></i> Situation Générale des Prêts';
+                    contentHTML = `
+                        <div class="form-group">
+                            <label>E-mail <span class="required">*</span></label>
+                            <input type="email" id="email-situation" class="form-control" required>
+                        </div>
+                    `;
+                    break;
+                    
+                case 'rapport-periodique':
+                    titre = '<i class="fas fa-calendar-alt"></i> Rapport Périodique';
+                    contentHTML = `
+                        <div class="form-row">
+                            <div class="form-group">
+                                <label>Date de départ <span class="required">*</span></label>
+                                <input type="date" id="date-depart" class="form-control" required>
+                            </div>
+                            <div class="form-group">
+                                <label>Date d'arrivée <span class="required">*</span></label>
+                                <input type="date" id="date-arrivee" class="form-control" required>
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label>E-mail <span class="required">*</span></label>
+                            <input type="email" id="email-rapport" class="form-control" required>
+                        </div>
+                    `;
+                    break;
+                    
+                case 'modifier-pret':
+                    titre = '<i class="fas fa-edit"></i> Modifier les Données d\'un Prêt';
+                    contentHTML = `
+                        <div class="form-group">
+                            <label>N° du Prêt à Modifier <span class="required">*</span></label>
+                            <input type="text" id="numero-pret-modif" class="form-control" 
+                                   pattern="^\\d{3}[A-Z]\\d{6}$" required>
+                        </div>
+                        <div id="modification-pret-content">
+                            <p>Veuillez d'abord saisir le numéro du prêt</p>
+                        </div>
+                    `;
+                    break;
+                    
+                case 'modifier-remboursement':
+                    titre = '<i class="fas fa-exchange-alt"></i> Modifier un Remboursement';
+                    contentHTML = `
+                        <div class="form-group">
+                            <label>N° de Référence du Remboursement <span class="required">*</span></label>
+                            <input type="number" id="reference-remboursement" class="form-control" required>
+                        </div>
+                        <div id="modification-remb-content">
+                            <p>Veuillez d'abord saisir le numéro de référence</p>
+                        </div>
+                    `;
+                    break;
+                    
+                case 'historique-membre':
+                    titre = '<i class="fas fa-history"></i> Historique des Prêts d\'un Membre';
+                    contentHTML = `
+                        <div class="form-group">
+                            <label>N° Identification du Membre <span class="required">*</span></label>
+                            <input type="text" id="id-membre" class="form-control" 
+                                   pattern="^[A-Z]\\d{6}$" 
+                                   title="Format: 1 lettre + 6 chiffres" required>
+                        </div>
+                        <div id="historique-resultats"></div>
+                    `;
+                    break;
+                    
+                case 'actualiser-penalites':
+                    titre = '<i class="fas fa-exclamation-triangle"></i> Actualiser les Pénalités';
+                    contentHTML = `
+                        <div class="form-group">
+                            <label>Date d'Aujourd'hui</label>
+                            <input type="date" id="date-aujourdhui" class="form-control" readonly>
+                        </div>
+                        <div class="form-group">
+                            <label>Prêts en Retard de Paiement</label>
+                            <div id="liste-prets-retard" style="background: #f8f9fa; padding: 1rem; border-radius: var(--border-radius);">
+                                <p>Chargement de la liste...</p>
+                            </div>
+                        </div>
+                    `;
+                    break;
+            }
+            
+            document.getElementById('modal-commande-titre').innerHTML = titre;
+            document.getElementById('commande-content').innerHTML = contentHTML;
+            
+            // Configurer les écouteurs spécifiques
+            setupCommandListeners(command);
+            
+            openModal('modal-commande');
+        }
+
+        // ==============================================
+        // FONCTIONS RÉELLES DE COMMUNICATION AVEC LE SERVEUR
+        // ==============================================
+
+        /**
+         * Fonction utilitaire pour appeler le serveur
+         */
+        async function callServer(action, data = {}) {
+            try {
+                const response = await fetch(CONFIG.SCRIPT_URL, {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/x-www-form-urlencoded'
+                    },
+                    body: new URLSearchParams({
+                        action: action,
+                        ...data
+                    })
+                });
+                
+                return await response.json();
+            } catch (error) {
+                console.error('Erreur lors de l\'appel au serveur:', error);
+                throw error;
+            }
+        }
+
+        // ==============================================
+        // FONCTIONS POUR LE FORMULAIRE DE PRÊT (RÉELLES)
+        // ==============================================
+
+        async function verifierNumeroPret() {
+            const numero = document.getElementById('numero-pret').value;
+            const regex = /^\d{3}[A-Z]\d{6}$/;
+            
+            if (!regex.test(numero)) {
+                showMessage('Format invalide. Exemple: 123W000001', 'error');
+                return;
+            }
+            
+            showLoader('Vérification du numéro...');
+            
+            try {
+                const result = await callServer('verifierNumeroPret', { numero: numero });
+                
+                if (result.success) {
+                    if (!result.isUnique) {
+                        showMessage('Ce numéro est déjà attribué et enregistré dans le système', 'error');
+                    } else {
+                        // Récupérer le nom de l'emprunteur
+                        const nomResult = await callServer('getBorrowerName', { numero: numero });
+                        if (nomResult.success) {
+                            document.getElementById('nom-emprunteur').value = nomResult.nom || '';
+                            showMessage('Numéro disponible', 'success');
+                        }
+                    }
+                } else {
+                    showMessage(result.message || 'Erreur lors de la vérification', 'error');
+                }
+            } catch (error) {
+                showMessage('Erreur de connexion au serveur: ' + error.message, 'error');
+            } finally {
+                hideLoader();
+            }
+        }
+
+        function calculerInteret() {
+            const capital = parseFloat(document.getElementById('capital-prete').value) || 0;
+            const total = parseFloat(document.getElementById('total-rembourser').value) || 0;
+            
+            // Validation: capital ne peut pas être supérieur au total
+            if (capital > total && total > 0) {
+                showMessage('Le capital ne peut pas être supérieur au total capital + intérêt', 'error');
+                document.getElementById('total-rembourser').value = '';
+                document.getElementById('interet-pret').value = '';
+                return;
+            }
+            
+            const interet = total - capital;
+            document.getElementById('interet-pret').value = interet.toFixed(0);
+        }
+
+        function genererEcheances() {
+            const nombreUter = parseInt(document.getElementById('nombre-uter').value) || 0;
+            const container = document.getElementById('installments-grid');
+            const info = document.getElementById('installments-info');
+            
+            if (nombreUter < 1 || nombreUter > CONFIG.MAX_ECHEANCES) {
+                container.innerHTML = '';
+                info.textContent = 'Veuillez spécifier un nombre d\'UTER entre 1 et 30';
+                return;
+            }
+            
+            info.textContent = `Plan de remboursement sur ${nombreUter} échéance(s)`;
+            container.innerHTML = '';
+            
+            const datePret = document.getElementById('date-pret').value;
+            const dateFin = document.getElementById('date-derniere-echeance').value;
+            
+            for (let i = 1; i <= nombreUter; i++) {
+                const card = document.createElement('div');
+                card.className = 'installment-card';
+                card.innerHTML = `
+                    <h4>Échéance ${i}</h4>
+                    <div class="form-group">
+                        <label>Date du ${i}${i === 1 ? 'er' : 'e'} remboursement <span class="required">*</span></label>
+                        <input type="date" id="date-echeance-${i}" class="form-control echeance-date" 
+                               data-index="${i}" required>
+                    </div>
+                    <div class="form-group">
+                        <label>Montant du ${i}${i === 1 ? 'er' : 'e'} remboursement <span class="required">*</span></label>
+                        <input type="number" id="montant-echeance-${i}" class="form-control echeance-montant" 
+                               data-index="${i}" min="0" step="0.01" required>
+                        <small class="form-text" id="max-montant-${i}"></small>
+                    </div>
+                `;
+                container.appendChild(card);
+                
+                // Configurer les contraintes de date
+                const dateInput = document.getElementById(`date-echeance-${i}`);
+                if (i === 1) {
+                    dateInput.min = datePret;
+                    dateInput.max = dateFin;
+                    if (datePret) dateInput.value = datePret;
+                }
+                
+                // Ajouter les écouteurs
+                dateInput.addEventListener('change', function() {
+                    validerDateEcheance(this, i);
+                });
+                
+                document.getElementById(`montant-echeance-${i}`).addEventListener('input', function() {
+                    calculerMontantMax(i);
+                });
+            }
+            
+            // Calculer le montant maximum pour la première échéance
+            calculerMontantMax(1);
+        }
+
+        function calculerMontantMax(index) {
+            const total = parseFloat(document.getElementById('total-rembourser').value) || 0;
+            let sommePrecedente = 0;
+            
+            for (let i = 1; i < index; i++) {
+                const montant = parseFloat(document.getElementById(`montant-echeance-${i}`).value) || 0;
+                sommePrecedente += montant;
+            }
+            
+            const montantMax = total - sommePrecedente;
+            document.getElementById(`max-montant-${index}`).textContent = 
+                `Maximum: ${montantMax.toFixed(2)}`;
+            
+            // Valider le montant saisi
+            const montantSaisi = parseFloat(document.getElementById(`montant-echeance-${index}`).value) || 0;
+            if (montantSaisi > montantMax) {
+                showMessage(`Le montant de l'échéance ${index} dépasse le maximum autorisé`, 'error');
+            }
+            
+            // Mettre à jour le maximum pour l'échéance suivante
+            if (index < CONFIG.MAX_ECHEANCES) {
+                const nextInput = document.getElementById(`montant-echeance-${index + 1}`);
+                if (nextInput) {
+                    calculerMontantMax(index + 1);
+                }
+            }
+        }
+
+        function validerDatePret() {
+            const datePret = new Date(document.getElementById('date-pret').value);
+            const aujourdhui = new Date();
+            aujourdhui.setHours(0, 0, 0, 0);
+            
+            if (datePret > aujourdhui + 1) {
+                showMessage('La date du prêt ne peut pas être future', 'error');
+                document.getElementById('date-pret').value = '';
+                return false;
+            }
+            return true;
+        }
+
+        function validerDateEcheance(input, index) {
+            if (!input) return true;
+            
+            const dateEcheance = new Date(input.value);
+            const datePret = new Date(document.getElementById('date-pret').value);
+            const dateFin = new Date(document.getElementById('date-derniere-echeance').value);
+            
+            if (index === 1) {
+                if (dateEcheance < datePret || dateEcheance > dateFin) {
+                    showMessage('La première échéance doit être entre la date du prêt et la date de dernière échéance', 'error');
+                    input.value = '';
+                    return false;
+                }
+            } else {
+                const datePrecedente = new Date(document.getElementById(`date-echeance-${index - 1}`).value);
+                if (dateEcheance < datePrecedente || dateEcheance > dateFin) {
+                    showMessage(`La date doit être entre ${datePrecedente.toLocaleDateString()} et ${dateFin.toLocaleDateString()}`, 'error');
+                    input.value = '';
+                    return false;
+                }
+            }
+            return true;
+        }
+
+        async function revisionPret() {
+            // Validation des champs obligatoires
+            const requiredFields = [
+                'numero-pret', 'date-pret', 'nom-emprunteur', 'monnaie-pret',
+                'capital-prete', 'total-rembourser', 'uter', 'nombre-uter',
+                'date-derniere-echeance', 'zone-pret'
+            ];
+            
+            for (const fieldId of requiredFields) {
+                const field = document.getElementById(fieldId);
+                if (!field.value.trim()) {
+                    showMessage(`Le champ "${field.previousElementSibling?.textContent || fieldId}" est obligatoire`, 'error');
+                    field.focus();
+                    return;
+                }
+            }
+            
+            // Validation du format du numéro de prêt
+            const numeroPret = document.getElementById('numero-pret').value;
+            const regex = /^\d{3}[A-Z]\d{6}$/;
+            if (!regex.test(numeroPret)) {
+                showMessage('Format du numéro de prêt invalide', 'error');
+                return;
+            }
+            
+            // Validation des montants
+            const capital = parseFloat(document.getElementById('capital-prete').value);
+            const total = parseFloat(document.getElementById('total-rembourser').value);
+            if (capital >= total) {
+                showMessage('Le capital doit être inférieur au total capital + intérêt', 'error');
+                return;
+            }
+            
+            // Validation du nombre d'UTER
+            const nombreUter = parseInt(document.getElementById('nombre-uter').value);
+            if (nombreUter < 1 || nombreUter > CONFIG.MAX_ECHEANCES) {
+                showMessage('Le nombre d\'UTER doit être entre 1 et 30', 'error');
+                return;
+            }
+            
+            // Validation des échéances
+            for (let i = 1; i <= nombreUter; i++) {
+                const dateEcheance = document.getElementById(`date-echeance-${i}`);
+                const montantEcheance = document.getElementById(`montant-echeance-${i}`);
+                
+                if (!dateEcheance?.value || !montantEcheance?.value) {
+                    showMessage(`Veuillez remplir l'échéance ${i}`, 'error');
+                    return;
+                }
+                
+                if (!validerDateEcheance(dateEcheance, i)) {
+                    return;
+                }
+            }
+            
+            // Récupérer les données
+            pretData = collectPretData();
+            
+            // Afficher la modal de révision
+            showRevisionModal(pretData);
+        }
+
+        function collectPretData() {
+            const nombreUter = parseInt(document.getElementById('nombre-uter').value);
+            const data = {
+                Q1: document.getElementById('numero-pret').value,
+                Q2: formatDateForServer(document.getElementById('date-pret').value),
+                Q3: document.getElementById('nom-emprunteur').value,
+                Q4: document.getElementById('monnaie-pret').value,
+                Q5: document.getElementById('capital-prete').value,
+                Q6: document.getElementById('total-rembourser').value,
+                Q7: document.getElementById('interet-pret').value,
+                Q8: document.getElementById('uter').value,
+                Q9: nombreUter,
+                Q10: formatDateForServer(document.getElementById('date-derniere-echeance').value),
+                Q11: document.getElementById('taux-penalite').value + '%',
+                Q12: document.getElementById('zone-pret').value
+            };
+            
+            // Ajouter les échéances
+            for (let i = 1; i <= CONFIG.MAX_ECHEANCES; i++) {
+                if (i <= nombreUter) {
+                    data[`Q13_${i}A`] = formatDateForServer(document.getElementById(`date-echeance-${i}`).value);
+                    data[`Q13_${i}B`] = document.getElementById(`montant-echeance-${i}`).value;
+                } else {
+                    data[`Q13_${i}A`] = '';
+                    data[`Q13_${i}B`] = '';
+                }
+            }
+            
+            return data;
+        }
+
+        function showRevisionModal(data) {
+            const content = document.getElementById('revision-pret-content');
+            let html = `
+                <h4 style="margin-bottom: 1.5rem; color: var(--primary-color);">Récapitulatif du Prêt</h4>
+                <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 1rem;">
+            `;
+            
+            // Informations de base
+            const baseFields = ['Q1', 'Q2', 'Q3', 'Q4', 'Q5', 'Q6', 'Q7', 'Q8', 'Q9', 'Q10', 'Q11', 'Q12'];
+            const fieldLabels = {
+                Q1: 'N° du Prêt', Q2: 'Date du Prêt', Q3: 'Nom Emprunteur',
+                Q4: 'Monnaie', Q5: 'Capital', Q6: 'Total Capital + Intérêt',
+                Q7: 'Intérêt', Q8: 'Unité de Temps', Q9: 'Nombre d\'UTER',
+                Q10: 'Date dernière échéance', Q11: 'Taux Pénalité', Q12: 'Zone'
+            };
+            
+            baseFields.forEach(field => {
+                html += `
+                    <div style="background: #f8f9fa; padding: 0.8rem; border-radius: 4px;">
+                        <strong>${fieldLabels[field]}:</strong><br>
+                        ${field === 'Q11' ? data[field] : (field === 'Q5' || field === 'Q6' || field === 'Q7' ? parseFloat(data[field]).toLocaleString('fr-FR') : data[field])}
+                    </div>
+                `;
+            });
+            
+            html += `</div>`;
+            
+            // Échéances
+            if (data.Q9 > 0) {
+                html += `
+                    <h4 style="margin-top: 2rem; margin-bottom: 1rem; color: var(--primary-color);">
+                        Plan de Remboursement (${data.Q9} échéance${data.Q9 > 1 ? 's' : ''})
+                    </h4>
+                    <div class="data-table-container" style="overflow-x: auto;">
+                        <table class="data-table">
+                            <thead>
+                                <tr>
+                                    <th>Échéance</th>
+                                    <th>Date</th>
+                                    <th>Montant</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                `;
+                
+                let totalRemboursements = 0;
+                for (let i = 1; i <= data.Q9; i++) {
+                    const montant = parseFloat(data[`Q13_${i}B`]);
+                    totalRemboursements += montant;
+                    html += `
+                        <tr>
+                            <td>${i}</td>
+                            <td>${formatDateForDisplay(data[`Q13_${i}A`])}</td>
+                            <td>${montant.toLocaleString('fr-FR')} ${data.Q4}</td>
+                        </tr>
+                    `;
+                }
+                
+                html += `
+                            </tbody>
+                            <tfoot>
+                                <tr style="background: #f8f9fa; font-weight: bold;">
+                                    <td colspan="2">Total des remboursements:</td>
+                                    <td>${totalRemboursements.toLocaleString('fr-FR')} ${data.Q4}</td>
+                                </tr>
+                            </tfoot>
+                        </table>
+                    </div>
+                `;
+            }
+            
+            content.innerHTML = html;
+            document.getElementById('loader-revision-pret').style.display = 'none';
+            content.style.display = 'block';
+            openModal('modal-revision-pret');
+        }
+
+        async function envoyerPret() {
+            showLoader('Enregistrement du prêt en cours...');
+            
+            try {
+                const result = await callServer('enregistrerPret', pretData);
+                
+                if (result.success) {
+                    showMessage(`Le prêt n° ${pretData.Q1} a été enregistré avec succès`, 'success');
+                    closeModal('modal-revision-pret');
+                    resetPretForm();
+                    showPage('home');
+                    loadStatistics();
+                } else {
+                    showMessage(result.error || 'Erreur lors de l\'enregistrement', 'error');
+                }
+            } catch (error) {
+                showMessage('Erreur de connexion: ' + error.message, 'error');
+            } finally {
+                hideLoader();
+            }
+        }
+
+        function resetPretForm() {
+            document.getElementById('numero-pret').value = '';
+            document.getElementById('date-pret').value = new Date().toISOString().split('T')[0];
+            document.getElementById('nom-emprunteur').value = '';
+            document.getElementById('monnaie-pret').value = '';
+            document.getElementById('capital-prete').value = '';
+            document.getElementById('total-rembourser').value = '';
+            document.getElementById('interet-pret').value = '';
+            document.getElementById('uter').value = '';
+            document.getElementById('nombre-uter').value = '';
+            
+            const futureDate = new Date();
+            futureDate.setDate(futureDate.getDate() + 30);
+            document.getElementById('date-derniere-echeance').value = futureDate.toISOString().split('T')[0];
+            
+            document.getElementById('taux-penalite').value = '1';
+            document.getElementById('zone-pret').value = '';
+            
+            document.getElementById('installments-grid').innerHTML = '';
+            document.getElementById('installments-info').textContent = 
+                'Veuillez d\'abord spécifier le nombre d\'UTER pour afficher les échéances';
+        }
+
+        // ==============================================
+        // FONCTIONS POUR LE FORMULAIRE DE REMBOURSEMENT
+        // ==============================================
+
+        async function verifierNumeroPretRemb() {
+            const numero = document.getElementById('numero-pret-remb').value;
+            const regex = /^\d{3}[A-Z]\d{6}$/;
+            
+            if (!regex.test(numero)) {
+                showMessage('Format invalide. Exemple: 123W000001', 'error');
+                return;
+            }
+            
+            try {
+                const result = await callServer('checkLoanExists', { numero: numero });
+                
+                if (result.success && result.exists) {
+                    document.getElementById('monnaie-pret-remb').value = result.monnaie || '';
+                    showMessage('Prêt trouvé', 'success');
+                } else {
+                    showMessage('Ce numéro de prêt n\'est pas dans le système, veuillez d\'abord l\'enregistrer', 'error');
+                    document.getElementById('monnaie-pret-remb').value = '';
+                }
+            } catch (error) {
+                showMessage('Erreur de connexion au serveur: ' + error.message, 'error');
+            }
+        }
+
+        function validerDateRemboursement() {
+            const dateRemb = new Date(document.getElementById('date-remboursement').value);
+            const aujourdhui = new Date();
+            aujourdhui.setHours(0, 0, 0, 0);
+            
+            if (dateRemb > aujourdhui + 1) {
+                showMessage('La date de remboursement ne peut pas être future', 'error');
+                document.getElementById('date-remboursement').value = '';
+                return false;
+            }
+            return true;
+        }
+
+        async function revisionRemboursement() {
+            // Validation
+            const dateInput = document.getElementById('date-remboursement').value;
+            const numeroPret = document.getElementById('numero-pret-remb').value;
+            const montant = document.getElementById('montant-paye').value;
+            
+            if (!dateInput || !numeroPret || !montant) {
+                showMessage('Tous les champs sont obligatoires', 'error');
+                return;
+            }
+            
+            const regex = /^\d{3}[A-Z]\d{6}$/;
+            if (!regex.test(numeroPret)) {
+                showMessage('Format du numéro de prêt invalide', 'error');
+                return;
+            }
+            
+            if (!validerDateRemboursement()) {
+                return;
+            }
+            
+            showLoader('Vérification du prêt...');
+            try {
+                const result = await callServer('checkLoanExists', { numero: numeroPret });
+                
+                if (!result.success || !result.exists) {
+                    showMessage('Ce numéro de prêt n\'est pas dans le système, veuillez d\'abord l\'enregistrer', 'error');
+                    hideLoader();
+                    return;
+                }
+                
+                // Collecter les données avec formatage sécurisé
+                remboursementData = {
+                    R1: formatDateForServer(dateInput), // Utilise la fonction corrigée
+                    R2: numeroPret,
+                    R3: document.getElementById('monnaie-pret-remb').value,
+                    R4: montant
+                };
+                
+                showRevisionRemboursementModal(remboursementData);
+                
+            } catch (error) {
+                showMessage('Erreur lors de la vérification: ' + error.message, 'error');
+            } finally {
+                hideLoader();
+            }
+        }
+
+        function showRevisionRemboursementModal(data) {
+            const content = document.getElementById('revision-remboursement-content');
+            content.innerHTML = `
+                <h4 style="margin-bottom: 1.5rem; color: var(--primary-color);">Récapitulatif du Remboursement</h4>
+                <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 1rem;">
+                    <div style="background: #f8f9fa; padding: 1rem; border-radius: 4px;">
+                        <strong>Date de Remboursement:</strong><br>
+                        ${data.R1}
+                    </div>
+                    <div style="background: #f8f9fa; padding: 1rem; border-radius: 4px;">
+                        <strong>N° du Prêt:</strong><br>
+                        ${data.R2}
+                    </div>
+                    <div style="background: #f8f9fa; padding: 1rem; border-radius: 4px;">
+                        <strong>Monnaie:</strong><br>
+                        ${data.R3}
+                    </div>
+                    <div style="background: #f8f9fa; padding: 1rem; border-radius: 4px;">
+                        <strong>Montant Payé:</strong><br>
+                        ${parseFloat(data.R4).toLocaleString('fr-FR')} ${data.R3}
+                    </div>
+                </div>
+            `;
+            
+            document.getElementById('loader-revision-remb').style.display = 'none';
+            content.style.display = 'block';
+            openModal('modal-revision-remboursement');
+        }
+
+       async function envoyerRemboursement() {
+            showLoader('Enregistrement du remboursement...');
+            
+            try {
+                // remboursementData contient maintenant R1 au format "JJ/MM/AAAA" (String)
+                const result = await callServer('enregistrerRemboursement', remboursementData);
+                
+                if (result.success) {
+                    showMessage(`Le remboursement du prêt n° ${remboursementData.R2} a été enregistré avec succès`, 'success');
+                    closeModal('modal-revision-remboursement');
+                    resetRemboursementForm();
+                    showPage('home');
+                    loadStatistics();
+                } else {
+                    showMessage(result.error || 'Erreur lors de l\'enregistrement', 'error');
+                }
+            } catch (error) {
+                showMessage('Erreur de connexion: ' + error.message, 'error');
+            } finally {
+                hideLoader();
+            }
+        }
+
+        function resetRemboursementForm() {
+            document.getElementById('date-remboursement').value = new Date().toISOString().split('T')[0];
+            document.getElementById('numero-pret-remb').value = '';
+            document.getElementById('monnaie-pret-remb').value = '';
+            document.getElementById('montant-paye').value = '';
+        }
+
+        // ==============================================
+        // FONCTIONS POUR LES COMMANDES (RÉELLES)
+        // ==============================================
+
+        function setupCommandListeners(command) {
+            const envoyerBtn = document.getElementById('btn-envoyer-commande');
+            
+            switch(command) {
+                case 'modifier-pret':
+                    document.getElementById('numero-pret-modif').addEventListener('blur', async function() {
+                        const numero = this.value;
+                        if (/^\d{3}[A-Z]\d{6}$/.test(numero)) {
+                            await loadPretForModification(numero);
+                        }
+                    });
+                    envoyerBtn.onclick = envoyerModificationPret;
+                    break;
+                    
+                case 'modifier-remboursement':
+                    document.getElementById('reference-remboursement').addEventListener('blur', async function() {
+                        const ref = this.value;
+                        if (ref) {
+                            await loadRemboursementForModification(ref);
+                        }
+                    });
+                    envoyerBtn.onclick = envoyerModificationRemboursement;
+                    break;
+                    
+                case 'actualiser-penalites':
+                    // Définir la date d'aujourd'hui
+                    const today = new Date().toISOString().split('T')[0];
+                    document.getElementById('date-aujourdhui').value = today;
+                    loadPretsEnRetard();
+                    envoyerBtn.onclick = envoyerActualisationPenalites;
+                    break;
+                    
+                default:
+                    envoyerBtn.onclick = function() {
+                        envoyerCommande(command);
+                    };
+            }
+        }
+
+        async function envoyerCommande(command) {
+        showLoader('Traitement en cours...');
+        
+        try {
+            const data = collectCommandData(command);
+
+            let result;
+
+            // 🔥 CAS SPÉCIAL : HISTORIQUE DES PRÊTS
+            if (command === 'historique-membre') {
+            result = await callServer('historique-membre', {
+                M20: document.getElementById('id-membre').value
+            });
+
+            if (result.success) {
+                afficherHistorique(result.data);   // 👈 AFFICHAGE ICI
+            } else {
+                showMessage(result.error || 'Erreur lors de la consultation', 'error');
+            }
+
+            return; // ⛔ on sort ici (pas de closeModal automatique)
+            }
+
+            // ✅ CAS GÉNÉRAL (autres commandes)
+            result = await callServer(command, data);
+
+            if (result.success) {
+            showMessage(result.message || 'Commande exécutée avec succès', 'success');
+            closeModal('modal-commande');
+            } else {
+            showMessage(result.error || 'Erreur lors de l\'exécution', 'error');
+            }
+
+        } catch (error) {
+            showMessage('Erreur de connexion: ' + error.message, 'error');
+        } finally {
+            hideLoader();
+        }
+        }
+
+        function collectCommandData(command) {
+            const data = {};
+            
+            switch(command) {
+                case 'journal':
+                    data.M1 = formatDateForServer(document.getElementById('date-operations').value);
+                    data.M2 = document.getElementById('email-journal').value;
+                    break;
+                    
+                case 'details-comptables':
+                    data.M3 = document.getElementById('numero-pret-details').value;
+                    data.M4 = document.getElementById('email-details').value;
+                    break;
+                    
+                case 'situation-generale':
+                    data.M5 = document.getElementById('email-situation').value;
+                    break;
+                    
+                case 'rapport-periodique':
+                    data.M6 = formatDateForServer(document.getElementById('date-depart').value);
+                    data.M7 = formatDateForServer(document.getElementById('date-arrivee').value);
+                    data.M8 = document.getElementById('email-rapport').value;
+                    break;
+                    
+                case 'historique-membre':
+                    data.M20 = document.getElementById('id-membre').value;
+                    break;
+                    
+                case 'actualiser-penalites':
+                    data.M21 = formatDateForServer(document.getElementById('date-aujourdhui').value);
+                    break;
+            }
+            
+            return data;
+        }
+
+        // ==============================================
+        // FONCTIONS SPÉCIFIQUES POUR LES COMMANDES (RÉELLES)
+        // ==============================================
+
+        async function loadPretForModification(numero) {
+            const content = document.getElementById('modification-pret-content');
+            content.innerHTML = `
+                <div class="loader" style="padding: 2rem; text-align: center;">
+                    <i class="fas fa-spinner"></i>
+                    <p>Chargement des données du prêt...</p>
+                </div>
+            `;
+            
+            try {
+                // Note: Cette fonctionnalité nécessiterait un endpoint supplémentaire
+                // Pour l'instant, on affiche un formulaire générique
+                setTimeout(() => {
+                    content.innerHTML = `
+                        <div class="form-row">
+                            <div class="form-group">
+                                <label>Capital Prêté Modifié <span class="required">*</span></label>
+                                <input type="number" id="capital-modif" class="form-control" step="0.01" required>
+                            </div>
+                            <div class="form-group">
+                                <label>Intérêt Modifié <span class="required">*</span></label>
+                                <input type="number" id="interet-modif" class="form-control" step="0.01" required>
+                            </div>
+                        </div>
+                        <div class="form-row">
+                            <div class="form-group">
+                                <label>Capital + Intérêt Modifié</label>
+                                <input type="number" id="total-modif" class="form-control" step="0.01" readonly>
+                            </div>
+                            <div class="form-group">
+                                <label>Taux Pénalité Modifié (%) <span class="required">*</span></label>
+                                <input type="number" id="penalite-modif" class="form-control" min="0" max="5" step="0.1" required>
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label>Date Échéance Modifiée <span class="required">*</span></label>
+                            <input type="date" id="echeance-modif" class="form-control" required>
+                        </div>
+                        <div class="form-group">
+                            <label>Autorisation du Top Manager <span class="required">*</span></label>
+                            <input type="password" id="auth-manager" class="form-control" required>
+                            <small class="form-text">Mot de passe requis pour modifier un prêt</small>
+                        </div>
+                    `;
+                    
+                    // Ajouter les écouteurs pour le calcul automatique
+                    document.getElementById('capital-modif').addEventListener('input', function() {
+                        const capital = parseFloat(this.value) || 0;
+                        const interet = parseFloat(document.getElementById('interet-modif').value) || 0;
+                        document.getElementById('total-modif').value = (capital + interet).toFixed(2);
+                    });
+                    
+                    document.getElementById('interet-modif').addEventListener('input', function() {
+                        const capital = parseFloat(document.getElementById('capital-modif').value) || 0;
+                        const interet = parseFloat(this.value) || 0;
+                        document.getElementById('total-modif').value = (capital + interet).toFixed(2);
+                    });
+                    
+                    // Pré-remplir avec la date d'aujourd'hui + 60 jours
+                    const futureDate = new Date();
+                    futureDate.setDate(futureDate.getDate() + 60);
+                    document.getElementById('echeance-modif').value = futureDate.toISOString().split('T')[0];
+                    
+                }, 1000);
+                
+            } catch (error) {
+                content.innerHTML = `
+                    <div class="message error">
+                        <i class="fas fa-exclamation-circle"></i>
+                        Erreur lors du chargement des données du prêt: ${error.message}
+                    </div>
+                `;
+            }
+        }
+
+        async function loadRemboursementForModification(ref) {
+            const content = document.getElementById('modification-remb-content');
+            content.innerHTML = `
+                <div class="loader" style="padding: 2rem; text-align: center;">
+                    <i class="fas fa-spinner"></i>
+                    <p>Chargement des données du remboursement...</p>
+                </div>
+            `;
+            
+            try {
+                setTimeout(() => {
+                    content.innerHTML = `
+                        <div class="form-row">
+                            <div class="form-group">
+                                <label>Date de Paiement Modifiée <span class="required">*</span></label>
+                                <input type="date" id="date-paiement-modif" class="form-control" required>
+                            </div>
+                            <div class="form-group">
+                                <label>N° du Prêt Modifié <span class="required">*</span></label>
+                                <input type="text" id="numero-pret-modif-remb" class="form-control" 
+                                       pattern="^\\d{3}[A-Z]\\d{6}$" required>
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label>Montant Payé Modifié <span class="required">*</span></label>
+                            <input type="number" id="montant-modif" class="form-control" step="0.01" required>
+                        </div>
+                    `;
+                    
+                    // Pré-remplir avec la date d'aujourd'hui
+                    document.getElementById('date-paiement-modif').value = new Date().toISOString().split('T')[0];
+                    
+                }, 1000);
+                
+            } catch (error) {
+                content.innerHTML = `
+                    <div class="message error">
+                        <i class="fas fa-exclamation-circle"></i>
+                        Erreur lors du chargement des données du remboursement: ${error.message}
+                    </div>
+                `;
+            }
+        }
+
+        async function loadPretsEnRetard() {
+            const container = document.getElementById('liste-prets-retard');
+            container.innerHTML = `
+                <div class="loader" style="text-align: center; padding: 1rem;">
+                    <i class="fas fa-spinner"></i>
+                    <p>Chargement de la liste des prêts en retard...</p>
+                </div>
+            `;
+            
+            try {
+                // Cette fonction consulte la colonne DA de la feuille BASE
+                setTimeout(() => {
+                    container.innerHTML = `
+                        <div class="message info">
+                            <i class="fas fa-info-circle"></i>
+                            La liste des prêts en retard sera générée automatiquement lors de l'envoi.<br>
+                            Cette fonctionnalité consulte la colonne DA de la feuille BASE.
+                        </div>
+                        <div style="margin-top: 1rem; padding: 1rem; background: #f8f9fa; border-radius: 4px;">
+                            <p><strong>Note :</strong> Les prêts en retard sont identifiés automatiquement par le système.</p>
+                            <p>En cliquant sur "Envoyer", le système ajoutera une entrée pour chaque prêt en retard avec la date d'aujourd'hui.</p>
+                        </div>
+                    `;
+                }, 1500);
+                
+            } catch (error) {
+                container.innerHTML = `
+                    <div class="message error">
+                        <i class="fas fa-exclamation-circle"></i>
+                        Erreur lors du chargement des prêts en retard: ${error.message}
+                    </div>
+                `;
+            }
+        }
+
+        async function envoyerModificationPret() {
+            // Validation des champs
+            const numeroPret = document.getElementById('numero-pret-modif').value;
+            const capital = document.getElementById('capital-modif').value;
+            const interet = document.getElementById('interet-modif').value;
+            const penalite = document.getElementById('penalite-modif').value;
+            const echeance = document.getElementById('echeance-modif').value;
+            const auth = document.getElementById('auth-manager').value;
+            
+            if (!numeroPret || !capital || !interet || !penalite || !echeance || !auth) {
+                showMessage('Tous les champs sont obligatoires', 'error');
+                return;
+            }
+            
+            showLoader('Modification du prêt en cours...');
+            
+            try {
+                const result = await callServer('modifier-pret', {
+                    M9: numeroPret,
+                    M10: capital,
+                    M11: interet,
+                    M12: (parseFloat(capital) + parseFloat(interet)).toFixed(2),
+                    M13: penalite + '%',
+                    M14: formatDateForServer(echeance),
+                    M15: auth
+                });
+                
+                hideLoader();
+                
+                if (result.success) {
+                    showMessage(result.message || 'Les données du prêt ont été modifiées avec succès', 'success');
+                    closeModal('modal-commande');
+                } else {
+                    showMessage(result.error || 'Erreur lors de la modification du prêt', 'error');
+                }
+                
+            } catch (error) {
+                hideLoader();
+                showMessage('Erreur de connexion au serveur: ' + error.message, 'error');
+            }
+        }
+
+        async function envoyerModificationRemboursement() {
+            // Validation des champs
+            const reference = document.getElementById('reference-remboursement').value;
+            const date = document.getElementById('date-paiement-modif').value;
+            const numeroPret = document.getElementById('numero-pret-modif-remb').value;
+            const montant = document.getElementById('montant-modif').value;
+            
+            if (!reference || !date || !numeroPret || !montant) {
+                showMessage('Tous les champs sont obligatoires', 'error');
+                return;
+            }
+            
+            // Validation du format du numéro de prêt
+            const regex = /^\d{3}[A-Z]\d{6}$/;
+            if (!regex.test(numeroPret)) {
+                showMessage('Format du numéro de prêt invalide', 'error');
+                return;
+            }
+            
+            showLoader('Modification du remboursement en cours...');
+            
+            try {
+                const result = await callServer('modifier-remboursement', {
+                    M16: reference,
+                    M17: formatDateForServer(date),
+                    M18: numeroPret,
+                    M19: montant
+                });
+                
+                hideLoader();
+                
+                if (result.success) {
+                    showMessage(result.message || 'Le remboursement a été modifié avec succès', 'success');
+                    closeModal('modal-commande');
+                } else {
+                    showMessage(result.error || 'Erreur lors de la modification du remboursement', 'error');
+                }
+                
+            } catch (error) {
+                hideLoader();
+                showMessage('Erreur de connexion au serveur: ' + error.message, 'error');
+            }
+        }
+
+        async function envoyerActualisationPenalites() {
+            const dateAujourdhui = document.getElementById('date-aujourdhui').value;
+            
+            if (!dateAujourdhui) {
+                showMessage('La date d\'aujourd\'hui est requise', 'error');
+                return;
+            }
+            
+            showLoader('Actualisation des pénalités en cours...');
+            
+            try {
+                const result = await callServer('actualiser-penalites', {
+                    M21: formatDateForServer(dateAujourdhui)
+                });
+                
+                hideLoader();
+                
+                if (result.success) {
+                    showMessage(result.message || 'Les pénalités ont été actualisées avec succès', 'success');
+                    closeModal('modal-commande');
+                } else {
+                    showMessage(result.error || 'Erreur lors de l\'actualisation des pénalités', 'error');
+                }
+                
+            } catch (error) {
+                hideLoader();
+                showMessage('Erreur de connexion au serveur: ' + error.message, 'error');
+            }
+        }
+
+        // ==============================================
+        // FONCTIONS UTILITAIRES
+        // ==============================================
+
+        async function loadStatistics() {
+            try {
+                // Cette fonction pourrait être étendue pour récupérer des statistiques réelles
+                // Pour l'instant, on utilise des valeurs par défaut
+                
+                // Vous pourriez ajouter un appel serveur ici pour récupérer les vraies statistiques
+                // const stats = await callServer('getStatistics');
+                
+                // Exemple de statistiques (à adapter selon votre structure de données)
+                document.getElementById('total-prets').textContent = '--';
+                document.getElementById('total-remboursements').textContent = '--';
+                document.getElementById('prets-en-retard').textContent = '--';
+                document.getElementById('membres-actifs').textContent = '--';
+                
+            } catch (error) {
+                console.error('Erreur lors du chargement des statistiques:', error);
+            }
+        }
+
+        function formatDateForServer(dateStr) {
+            if (!dateStr) return '';
+            
+            // Si la date est déjà au format JJ/MM/AAAA (contient des slashs), on ne la touche plus
+            if (typeof dateStr === 'string' && dateStr.includes('/')) return dateStr;
+
+            try {
+                const date = new Date(dateStr);
+                // Vérifier si la date est valide avant de formater
+                if (isNaN(date.getTime())) return dateStr; 
+
+                const day = date.getDate().toString().padStart(2, '0');
+                const month = (date.getMonth() + 1).toString().padStart(2, '0');
+                const year = date.getFullYear();
+                return `${day}/${month}/${year}`;
+            } catch (e) {
+                console.error("Erreur formatage date:", e);
+                return dateStr;
+            }
+        }
+
+        function formatDateForDisplay(dateStr) {
+            if (!dateStr) return '';
+            
+            // Si c'est déjà un objet Date (le coupable probable)
+            if (dateStr instanceof Date) {
+                const day = dateStr.getDate().toString().padStart(2, '0');
+                const month = (dateStr.getMonth() + 1).toString().padStart(2, '0');
+                const year = dateStr.getFullYear();
+                return `${day}/${month}/${year}`;
+            }
+            
+            // Si c'est une chaîne de caractères
+            const str = String(dateStr);
+            if (str.includes('/')) return str; // Déjà au bon format
+            
+            if (str.includes('-')) { // Format ISO YYYY-MM-DD
+                const parts = str.split('-');
+                return `${parts[2]}/${parts[1]}/${parts[0]}`;
+            }
+            
+            return str;
+        }
+
+        function showMessage(text, type) {
+            const container = document.getElementById('message-container');
+            const message = document.createElement('div');
+            
+            // Utilise vos classes CSS existantes (.message .success, etc.)
+            message.className = `message ${type}`;
+            
+            // On force l'affichage en flex pour aligner texte et bouton
+            message.style.display = 'flex';
+            message.style.alignItems = 'center';
+            message.style.justifyContent = 'space-between';
+            message.style.gap = '15px';
+            message.style.opacity = '1'; // S'assure de la visibilité
+
+            message.innerHTML = `
+                <div style="display: flex; align-items: center; gap: 12px;">
+                    <i class="fas fa-${type === 'success' ? 'check-circle' : 
+                                    type === 'error' ? 'exclamation-circle' : 
+                                    type === 'warning' ? 'exclamation-triangle' : 'info-circle'}"></i>
+                    <span>${text}</span>
+                </div>
+                <button onclick="this.parentElement.remove()" class="btn-message-ok">
+                    OK
+                </button>
+            `;
+            
+            container.appendChild(message);
+            // Note : Le setTimeout a été supprimé pour que le message reste fixe.
+        }
+
+       function showLoader(message = 'Traitement en cours...') {
+            const loader = document.getElementById('global-loader');
+            const textElement = loader.querySelector('p');
+            if (textElement) textElement.textContent = message;
+            
+            loader.style.display = 'flex'; // Utilise flex pour centrer le contenu
+        }
+
+        function hideLoader() {
+            document.getElementById('global-loader').style.display = 'none';
+        }
+        function openModal(modalId) {
+            document.getElementById(modalId).style.display = 'flex';
+        }
+
+        function closeModal(modalId) {
+            document.getElementById(modalId).style.display = 'none';
+        }
+
+        function afficherHistorique(data) {
+        if (!data.length) {
+            document.getElementById('historique-resultats').innerHTML =
+            '<p>Aucun prêt trouvé pour ce membre.</p>';
+            return;
+        }
+
+        let html = `
+            <table class="data-table">
+            <thead>
+                <tr>
+                <th>N° Prêt</th>
+                <th>Date</th>
+                <th>Monnaie</th>
+                <th>Capital</th>
+                <th>Intérêt</th>
+                <th>Rembour</th>
+                <th>Statut</th>
+                </tr>
+            </thead>
+            <tbody>
+        `;
+
+        data.forEach(row => {
+            html += `
+            <tr>
+                <td>${row[0]}</td>
+                <td>${row[1]}</td>
+                <td>${row[2]}</td>
+                <td>${row[3]}</td>
+                <td>${row[4]}</td>
+                <td>${row[5]}</td>
+                <td>${row[6]}</td>
+            </tr>
+            `;
+        });
+
+        html += '</tbody></table>';
+        document.getElementById('historique-resultats').innerHTML = html;
+        }
+
+        async function tenterConnexion() {
+            const pwd = document.getElementById('access-password').value;
+            const errorDiv = document.getElementById('auth-error');
+            
+            if (!pwd) {
+                errorDiv.textContent = "Le mot de passe est requis.";
+                errorDiv.style.display = "block";
+                return;
+            }
+
+            showLoader('Vérification des accès...');
+            
+            try {
+                const result = await callServer('verifierAcces', { password: pwd });
+                
+                if (result.success) {
+                    // Cacher l'overlay d'authentification et charger l'app
+                    document.getElementById('auth-overlay').style.display = 'none';
+                    showMessage('Accès accordé', 'success');
+                } else {
+                    errorDiv.textContent = result.message || "Accès refusé";
+                    errorDiv.style.display = "block";
+                    document.getElementById('access-password').value = "";
+                }
+            } catch (error) {
+                errorDiv.textContent = "Erreur de connexion au serveur.";
+                errorDiv.style.display = "block";
+            } finally {
+                hideLoader();
+            }
+        }
+
+        // Optionnel : permettre la validation avec la touche Entrée
+        document.getElementById('access-password').addEventListener('keypress', function (e) {
+            if (e.key === 'Enter') {
+                tenterConnexion();
+            }
+        });
+
+        let deferredPrompt;
+
+        // Enregistrer le Service Worker
+        if ('serviceWorker' in navigator) {
+            navigator.serviceWorker.register('sw.js')
+                .then(() => console.log('Service Worker Enregistré'));
+        }
+
+        // Gérer l'événement d'installation
+        window.addEventListener('beforeinstallprompt', (e) => {
+            e.preventDefault();
+            deferredPrompt = e;
+            // Afficher la bannière d'installation
+            document.getElementById('install-banner').style.display = 'block';
+        });
+
+        document.getElementById('btn-install').addEventListener('click', async () => {
+            if (deferredPrompt) {
+                deferredPrompt.prompt();
+                const { outcome } = await deferredPrompt.userChoice;
+                if (outcome === 'accepted') {
+                    console.log('Utilisateur a accepté l\'installation');
+                }
+                deferredPrompt = null;
+                document.getElementById('install-banner').style.display = 'none';
+            }
+        });
+
+    </script>
+</body>
+</html>

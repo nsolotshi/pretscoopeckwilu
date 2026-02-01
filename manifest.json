@@ -1,0 +1,21 @@
+{
+  "name": "COOPEC KWILU - Gestion de Crédit",
+  "short_name": "CoopecKwilu",
+  "description": "Système de gestion de crédit pour la COOPEC KWILU",
+  "start_url": "./indexdeep.html",
+  "display": "standalone",
+  "background_color": "#2c3e50",
+  "theme_color": "#2c3e50",
+  "icons": [
+    {
+      "src": "https://i.postimg.cc/RNH2v9sC/logo-coopec-Kwilu.jpg",
+      "sizes": "192x192",
+      "type": "image/jpeg"
+    },
+    {
+      "src": "https://i.postimg.cc/RNH2v9sC/logo-coopec-Kwilu.jpg",
+      "sizes": "512x512",
+      "type": "image/jpeg"
+    }
+  ]
+}
